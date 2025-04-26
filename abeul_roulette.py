@@ -19,7 +19,7 @@ entry_fg_color = 'white'
 def limit_input_length(P):
     return len(P) <= 2
 
-# 결과 출력
+# 결과 출력 (최종 확정)
 def start_roulette():
     team1 = [entry.get() for entry in team1_entries]
     team2 = [entry.get() for entry in team2_entries]
@@ -49,23 +49,76 @@ def start_roulette():
     team2_result = assign_roles(team2)
 
     def print_team_result(team_name, team_result):
-        result_text.insert(tk.END, f"=============== {team_name} ===============\n")
-        result_text.insert(tk.END, f"| {'팀원'.center(4)} | {'라인'.center(4)} | {'티어'.center(4)} | {'6티어'.center(4)} |\n")
-        result_text.insert(tk.END, f"===================================\n")
+        symbol = "✨" if team_name == "1팀" else "🔥"
+        result_text.insert(tk.END, f"{symbol} {team_name} 결과 {symbol}\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
+        result_text.insert(tk.END, f"| {'팀원'.center(4)} | {'라인'.center(4)} | {'티어'.center(5)} | {'6티어'.center(8)} |\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
         for member in team_result:
             name, line, tier, extra_line = member
             name_str = str(name).center(6)
             line_str = str(line).center(6)
-            tier_str = f"{tier}티어".center(6)
+            tier_str = f"{tier}티어".center(7)
             extra_line_str = str(extra_line).center(7) if extra_line else " ".center(8)
             result_text.insert(tk.END, f"|{name_str}|{line_str}|{tier_str}|{extra_line_str}|\n")
-        result_text.insert(tk.END, "\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n")
 
     print_team_result("1팀", team1_result)
     print_team_result("2팀", team2_result)
 
-    # 결과 전체를 가운데 정렬
     result_text.tag_add('center', "1.0", "end")
+
+# 룰렛 이펙트 적용
+def start_roulette_with_effect():
+    team1 = [entry.get() for entry in team1_entries]
+    team2 = [entry.get() for entry in team2_entries]
+
+    if '' in team1 or '' in team2:
+        messagebox.showerror("오류", "모든 이름을 입력해주세요!")
+        return
+
+    temp_team1 = team1.copy()
+    temp_team2 = team2.copy()
+
+    spin_count = 20  # 돌릴 횟수
+
+    def spin():
+        nonlocal spin_count
+        result_text.delete('1.0', tk.END)
+
+        # 1팀
+        result_text.insert(tk.END, "✨ 1팀 결과 ✨\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
+        result_text.insert(tk.END, f"| {'팀원'.center(4)} | {'라인'.center(4)} | {'티어'.center(5)} | {'6티어'.center(8)} |\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
+        for name in temp_team1:
+            random_line = random.choice(lines)
+            random_tier = random.randint(1, 6)
+            result_text.insert(tk.END, f"|{name.center(6)}|{random_line.center(6)}|{(str(random_tier)+'티어').center(7)}|{' '.center(8)}|\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n")
+
+        # 2팀
+        result_text.insert(tk.END, "🔥 2팀 결과 🔥\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
+        result_text.insert(tk.END, f"| {'팀원'.center(4)} | {'라인'.center(4)} | {'티어'.center(5)} | {'6티어'.center(8)} |\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
+        for name in temp_team2:
+            random_line = random.choice(lines)
+            random_tier = random.randint(1, 6)
+            result_text.insert(tk.END, f"|{name.center(6)}|{random_line.center(6)}|{(str(random_tier)+'티어').center(7)}|{' '.center(8)}|\n")
+        result_text.insert(tk.END, "━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n")
+
+        result_text.tag_add('center', "1.0", "end")
+
+        spin_count -= 1
+        if spin_count > 0:
+            root.after(50, spin)
+        else:
+            start_roulette()  # 진짜 결과 출력
+
+    spin()
+
+
 
 # 메인 창 만들기
 root = tk.Tk()
@@ -104,7 +157,7 @@ for i in range(5):
     team2_entries.append(entry2)
 
 # 룰렛 시작 버튼
-start_button = tk.Button(root, text="룰렛 돌리기", command=start_roulette,
+start_button = tk.Button(root, text="룰렛 돌리기", command=start_roulette_with_effect,
                          bg="#FF4C68", fg='white', font=('Arial', 12, 'bold'))
 start_button.pack(pady=10)
 
