@@ -1,4 +1,4 @@
-('D:\\vsCodeProject\\python\\build\\abeul_roulette\\PYZ-00.pyz',
+('D:\\vsCodeProject\\python\\abeul_roulette\\build\\abeul_roulette\\PYZ-00.pyz',
  [('_compat_pickle',
    'C:\\Users\\abeul\\AppData\\Local\\Programs\\Python\\Python310\\lib\\_compat_pickle.py',
    'PYMODULE'),
