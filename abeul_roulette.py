@@ -204,7 +204,6 @@ for i in range(5):
     entry2.grid(row=i+1, column=2, padx=10, pady=5)
     team2_entries.append(entry2)
 
-# 룰렛 돌리기 + 초기화 버튼 같이 묶기
 button_frame = tk.Frame(root, bg=background_color)
 button_frame.pack(pady=5)
 
