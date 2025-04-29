@@ -15,6 +15,10 @@ text_color = '#FF6B81'
 entry_bg_color = '#333333'
 entry_fg_color = 'white'
 
+# 기본 폰트 설정
+font_large = ('Arial', 16, 'bold')
+font_normal = ('Arial', 16)
+
 # 2글자 입력 제한 함수
 def limit_input_length(P):
     return len(P) <= 2
@@ -174,33 +178,35 @@ def reset_all():
 
 # Tkinter 기본 창 세팅
 root = tk.Tk()
-root.title("이벤트 내전 룰렛 프로그램 v1.1.0 made by 조아블")
+root.title("이벤트 내전 룰렛 프로그램 v1.1.1 made by 조아블")
 root.configure(bg=background_color)
 
 frame = tk.Frame(root, bg=background_color)
 frame.pack(pady=10)
 
-team1_label = tk.Label(frame, text="1팀", fg=text_color, bg=background_color, font=('Arial', 14, 'bold'))
+team1_label = tk.Label(frame, text="1팀", fg=text_color, bg=background_color, font=font_large)
 team1_label.grid(row=0, column=0, pady=5)
 
-team2_label = tk.Label(frame, text="2팀", fg=text_color, bg=background_color, font=('Arial', 14, 'bold'))
+team2_label = tk.Label(frame, text="2팀", fg=text_color, bg=background_color, font=font_large)
 team2_label.grid(row=0, column=2, pady=5)
 
 vcmd = (root.register(limit_input_length), '%P')
 
 for i in range(5):
-    entry1 = tk.Entry(frame, bg=entry_bg_color, fg=entry_fg_color, insertbackground='white', validate="key", validatecommand=vcmd)
+    entry1 = tk.Entry(frame, bg=entry_bg_color, fg=entry_fg_color, insertbackground='white',
+                      font=font_normal, validate="key", validatecommand=vcmd)
     entry1.grid(row=i+1, column=0, padx=10, pady=5)
     team1_entries.append(entry1)
 
     if i == 2:
-        vs_label = tk.Label(frame, text="VS", fg=text_color, bg=background_color, font=('Arial', 12, 'bold'))
+        vs_label = tk.Label(frame, text="VS", fg=text_color, bg=background_color, font=font_large)
         vs_label.grid(row=i+1, column=1)
     else:
         empty_label = tk.Label(frame, text="", bg=background_color)
         empty_label.grid(row=i+1, column=1)
 
-    entry2 = tk.Entry(frame, bg=entry_bg_color, fg=entry_fg_color, insertbackground='white', validate="key", validatecommand=vcmd)
+    entry2 = tk.Entry(frame, bg=entry_bg_color, fg=entry_fg_color, insertbackground='white',
+                      font=font_normal, validate="key", validatecommand=vcmd)
     entry2.grid(row=i+1, column=2, padx=10, pady=5)
     team2_entries.append(entry2)
 
@@ -208,20 +214,17 @@ button_frame = tk.Frame(root, bg=background_color)
 button_frame.pack(pady=5)
 
 start_button = tk.Button(button_frame, text="룰렛 돌리기", command=start_roulette_with_effect,
-                         bg="#E0435C", fg='white', font=('Arial', 12, 'bold'))
+                         bg="#E0435C", fg='white', font=font_large)
 start_button.pack(side='left', padx=(0, 15))
 
 reset_button = tk.Button(button_frame, text="초기화", command=reset_all,
-                         bg="#E0435C", fg='white', font=('Arial', 12))
+                         bg="#E0435C", fg='white', font=font_large)
 reset_button.pack(side='left')
 
 result_text = tk.Text(root, width=50, height=20,
-                      bg=background_color,
-                      fg=text_color,
-                      insertbackground='white',
-                      font=('Courier New', 12, 'bold'),
-                      wrap="none",
-                      padx=10, pady=10)
+                      bg=background_color, fg=text_color,
+                      insertbackground='white', font=('Courier New', 16, 'bold'),
+                      wrap="none", padx=10, pady=10)
 result_text.pack(pady=10)
 result_text.tag_configure('center', justify='center')
 
@@ -233,7 +236,7 @@ def copy_result():
     messagebox.showinfo("복사 완료", "결과가 클립보드에 복사되었습니다!")
 
 copy_button = tk.Button(root, text="결과 복사", command=copy_result,
-                        bg="#E0435C", fg='white', font=('Arial', 12, 'bold'))
+                        bg="#E0435C", fg='white', font=font_large)
 copy_button.pack(pady=5)
 
 root.mainloop()
