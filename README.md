@@ -33,21 +33,5 @@
 
 ## 설치 및 실행 방법
 
-### 1. Python 설치
-- Python 3.10 이상 설치 (3.12은 추천하지 않음)
-- [Python 3.10 다운로드 링크](https://www.python.org/ftp/python/3.10.11/python-3.10.11-amd64.exe)
-
-설치할 때 꼭 `Add Python to PATH` 옵션 체크!
-
-### 2. 프로젝트 파일 다운로드
-- `abeul_roulette.py` 파일을 다운로드합니다.
-
-### 3. 필요한 라이브러리 설치
-별도로 설치해야 할 외부 라이브러리는 없습니다.  
-**Tkinter**와 **random** 모듈은 Python 기본 패키지에 포함되어 있습니다.
-
-### 4. 실행
-다운로드 받은 폴더에서 터미널(cmd) 열고:
-
-```bash
-python abeul_roulette.py
+### 블로그 참고
+[아블 블로그 - 이벤트 내전 룰렛 다운로드 링크](https://blog.naver.com/abeul_dv/223870922837)
